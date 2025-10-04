@@ -3,7 +3,7 @@ import { Recipe, Category } from '../types';
 
 interface RecipeDetailPageProps {
   recipe: Recipe;
-  category: Category;
+  category?: Category;
   onBackClick: () => void;
 }
 

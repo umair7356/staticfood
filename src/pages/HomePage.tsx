@@ -12,6 +12,7 @@ interface HomePageProps {
   onCategoryClick: (categoryId: string) => void;
   onRecipeClick: (recipeId: string) => void;
   onAboutClick: () => void;
+   onBlogClick: (blogId: number) => void; 
 }
 
 export default function HomePage({
@@ -20,10 +21,12 @@ export default function HomePage({
   blogs,
   onCategoryClick,
   onRecipeClick,
-  onAboutClick
+  onAboutClick,
+  onBlogClick
+  
 }: HomePageProps) {
   const featuredRecipes = recipes.slice(0, 8);
-
+// console.log("ssadasdas",featuredRecipes);
   return (
     <div className="min-h-screen bg-gray-50">
       <Hero />
@@ -66,6 +69,7 @@ export default function HomePage({
                 onClick={() => onRecipeClick(recipe.id)}
               />
             ))}
+            
           </div>
         </div>
 
@@ -81,7 +85,7 @@ export default function HomePage({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {blogs.map((blog) => (
-              <BlogCard key={blog.id} blog={blog} />
+              <BlogCard key={blog.id} blog={blog} onClick={() => onBlogClick(blog.id)}/>
             ))}
           </div>
         </div>

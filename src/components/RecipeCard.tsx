@@ -22,6 +22,8 @@ export default function RecipeCard({ recipe, onClick }: RecipeCardProps) {
     }
   };
 
+  // console.log(recipe);
+
   return (
     <button
       onClick={onClick}

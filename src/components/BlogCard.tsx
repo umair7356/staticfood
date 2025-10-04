@@ -3,9 +3,10 @@ import { BlogPost } from '../types';
 
 interface BlogCardProps {
   blog: BlogPost;
+  onClick: () => void;
 }
 
-export default function BlogCard({ blog }: BlogCardProps) {
+export default function BlogCard({ blog ,onClick }: BlogCardProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -41,7 +42,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
         <p className="text-gray-600 mb-4 line-clamp-3">
           {blog.excerpt}
         </p>
-        <button className="text-emerald-600 hover:text-emerald-700 font-semibold transition">
+        <button onClick={onClick}  className="text-emerald-600 hover:text-emerald-700 font-semibold transition">
           Read More →
         </button>
       </div>

@@ -4,14 +4,28 @@ import HomePage from './pages/HomePage';
 import CategoryPage from './pages/CategoryPage';
 import RecipeDetailPage from './pages/RecipeDetailPage';
 import AboutPage from './pages/AboutPage';
+import BlogDetailPage from './pages/BlogDetailPage';
 import { categories, recipes, blogs } from './data';
 
-type Page = 'home' | 'category' | 'recipe' | 'about';
+type Page = 'home' | 'category' | 'recipe' | 'about' | 'blog';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
-  const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
+  // const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  // const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
+const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null);
+const selectedBlog = selectedBlogId ? blogs.find(b => b.id === selectedBlogId) : null;
+
+
+const handleBlogClick = (blogId: number) => {
+  console.log("clicked");
+  setSelectedBlogId(blogId);
+  setCurrentPage('blog');
+  window.scrollTo(0, 0);
+};
+
 
   const handleCategoryClick = (categoryId: string) => {
     setSelectedCategoryId(categoryId);
@@ -19,11 +33,21 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  // const handleRecipeClick = (recipeId: string) => {
+  //   setSelectedRecipeId(recipeId);
+  //   setCurrentPage('recipe');
+  //   window.scrollTo(0, 0);
+  // };
   const handleRecipeClick = (recipeId: string) => {
+  const recipe = recipes.find(r => r.id === recipeId);
+  if (recipe) {
     setSelectedRecipeId(recipeId);
-    setCurrentPage('recipe');
-    window.scrollTo(0, 0);
-  };
+    setSelectedCategoryId(recipe.category_id ?? null); // keep category if available
+  }
+  setCurrentPage('recipe');
+  window.scrollTo(0, 0);
+};
+
 
   const handleBackToHome = () => {
     setCurrentPage('home');
@@ -56,6 +80,7 @@ function App() {
     : null;
 
   return (
+    <>
     <div className="min-h-screen bg-gray-50">
       <Navbar
         onHomeClick={handleBackToHome}
@@ -72,6 +97,7 @@ function App() {
           onCategoryClick={handleCategoryClick}
           onRecipeClick={handleRecipeClick}
           onAboutClick={handleAboutClick}
+           onBlogClick={handleBlogClick} 
         />
       )}
 
@@ -83,22 +109,25 @@ function App() {
           onRecipeClick={handleRecipeClick}
         />
       )}
+{currentPage === 'recipe' && selectedRecipe && (
+  <RecipeDetailPage
+    recipe={selectedRecipe}
+    category={selectedCategory ?? undefined} // optional
+    onBackClick={selectedCategory ? handleBackToCategory : handleBackToHome}
+  />
+)}
 
-      {currentPage === 'recipe' && selectedRecipe && selectedCategory && (
-        <RecipeDetailPage
-          
-          recipe={selectedRecipe}
-          category={selectedCategory}
-          onBackClick={handleBackToCategory}
-        />
-      )}
-
+{currentPage === 'blog' && selectedBlog && (
+  <BlogDetailPage
+    blog={selectedBlog}
+    onBackClick={handleBackToHome}
+  />
+)}
       {currentPage === 'about' && (
-        <AboutPage 
-          
-          onBackClick={handleBackToHome} />
+        <AboutPage onBackClick={handleBackToHome} />
       )}
     </div>
+    </>
   );
 }
 
