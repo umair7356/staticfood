@@ -18,6 +18,7 @@ export default function BlogCard({ blog ,onClick }: BlogCardProps) {
         <img
           src={blog.image_url}
           alt={blog.title}
+          onClick={onClick}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
         />
       </div>
