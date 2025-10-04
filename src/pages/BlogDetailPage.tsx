@@ -15,10 +15,10 @@ export default function BlogDetailPage({ blog, onBackClick }: BlogDetailPageProp
           alt={blog.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t   from-black/70 via-black/30 to-transparent" />
         <button
           onClick={onBackClick}
-          className="absolute top-4 left-4 flex items-center space-x-2 text-white hover:text-emerald-300 transition"
+          className="absolute top-4 left-4 flex items-center top-1/2 space-x-2 text-white hover:text-emerald-300 transition"
         >
           <ArrowLeft className="w-5 h-5" />
           <span>Back to Home</span>
